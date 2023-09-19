@@ -1,7 +1,6 @@
 package utils;
 
-import io.github.bonigarcia.wdm.Config;
-import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.xml.DOMConfigurator;
 import org.openqa.selenium.*;
@@ -16,6 +15,7 @@ import steps.PageInitializer;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +27,7 @@ public class CommonMethods extends PageInitializer {
         ConfigReader.readProperties(Constants.CONFIGURATION_FILEPATH);
         switch (ConfigReader.getPropertyValue("browser")) {
             case "chrome":
-                WebDriverManager.chromedriver().setup();
+
                 ChromeOptions chromeOptions=new ChromeOptions();
                 chromeOptions.addArguments("--no-sandbox");
                 chromeOptions.addArguments("--disable-dev-shm-usage");
@@ -35,7 +35,7 @@ public class CommonMethods extends PageInitializer {
                 driver = new ChromeDriver(chromeOptions);
                 break;
             case "firefox":
-                WebDriverManager.firefoxdriver().setup();
+
                 driver = new FirefoxDriver();
                 break;
             default:
@@ -67,7 +67,7 @@ public class CommonMethods extends PageInitializer {
 
     //to get webdriver wait
     public static WebDriverWait getWait() {
-        WebDriverWait wait = new WebDriverWait(driver, Constants.EXPLICIT_WAIT);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(Constants.EXPLICIT_WAIT));
         return wait;
     }
 
